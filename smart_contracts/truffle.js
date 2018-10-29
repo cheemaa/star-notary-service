@@ -1,6 +1,6 @@
 var HDWalletProvider = require('truffle-hdwallet-provider');
 
-var mnemonic = 'sponsor note seek maximum review table menu mushroom payment sight relief puppy';
+var mnemonic = 'mixture kitten beach race fly toast gasp female cram gorilla witness miracle';
 
 module.exports = {
   networks: {
@@ -13,10 +13,9 @@ module.exports = {
       gasPrice: 10000000000,
     },
     development: {
-      provider: function() {
-        return new HDWalletProvider(mnemonic, "http://127.0.0.1:8545/");
-      },
-      network_id: '*',
+      host: "127.0.0.1",
+      port: 7545,
+      network_id: "*" // Match any network id
     },
   }
 };

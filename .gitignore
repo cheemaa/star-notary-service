@@ -1,3 +1,4 @@
 .DS_Store
 /smart_contracts/node_modules
 .vscode
+build/

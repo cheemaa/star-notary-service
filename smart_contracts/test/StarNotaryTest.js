@@ -1,22 +1,63 @@
 const StarNotary = artifacts.require('StarNotary')
 
-contract('StarNotary', accounts => { 
+contract('StarNotary', accounts => {
+    let defaultAccount = accounts[0]
+    let user1 = accounts[1]
+    let user2 = accounts[2]
+    let operator = accounts[3]
 
     beforeEach(async function() { 
-        this.contract = await StarNotary.new({from: accounts[0]})
+        this.contract = await StarNotary.new({from: defaultAccount})
     })
 
-    describe('can create a star', () => { 
-        it('can create a star and get its name', async function () { 
-            let tokenId = 1
+    describe('star existence', () => {
+        let dec = 0x1
+        let mag = 0x1
+        let cent = 0x1
+        let tokenId = 1
 
-            await this.contract.createStar('Awesome Star!', tokenId, {from: accounts[0]})
+        it('star does not exist', async function () { 
+            assert.equal(await this.contract.checkIfStarExist(dec, mag, cent), false)
+        })
 
-            assert.equal(await this.contract.tokenIdToStarInfo(tokenId), 'Awesome Star!')
+        it('star does exist', async function () { 
+            await this.contract.createStar("Osa Menor", "La Osa Mayor tenía una hija, llamada Osa Menor", dec, mag, cent, tokenId, {from: user1})
+            assert.equal(await this.contract.checkIfStarExist(dec, mag, cent), true)
         })
     })
 
-    describe('buying and selling stars', () => { 
+    describe('can create a star', () => {
+        let dec = 0x1
+        let mag = 0x1
+        let cent = 0x1
+        let tokenId = 1
+
+        beforeEach(async function () { 
+            tx = await this.contract.createStar("Osa Menor", "La Osa Mayor tenía una hija, llamada Osa Menor", dec, mag, cent, tokenId, {from: user1})
+        })
+
+        it('can create a star and get its name', async function () { 
+            var starInfo = await this.contract.tokenIdToStarInfo(tokenId)
+            assert.equal(starInfo[0], 'Osa Menor')
+            assert.equal(starInfo[1], 'La Osa Mayor tenía una hija, llamada Osa Menor')
+        })
+
+        it('ownerOf tokenId is user1', async function () {
+            assert.equal(await this.contract.ownerOf(tokenId), user1)
+        })
+
+        it('balanceOf user1 is incremented by 1', async function () { 
+            let balance = await this.contract.balanceOf(user1)
+
+            assert.equal(balance.toNumber(), 1)
+        })
+
+        it('emits the correct event during creation of a new token', async function () { 
+            assert.equal(tx.logs[0].event, 'Transfer')
+        })
+    })
+
+    /*describe('buying and selling stars', () => { 
 
         let user1 = accounts[1]
         let user2 = accounts[2]
@@ -70,5 +111,5 @@ contract('StarNotary', accounts => {
                 assert.equal(balanceOfUser2BeforeTransaction.sub(balanceAfterUser2BuysStar), starPrice)
             })
         })
-    })
+    })*/
 })
