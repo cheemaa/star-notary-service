@@ -11,9 +11,9 @@ contract('StarNotary', accounts => {
     })
 
     describe('star existence', () => {
-        let dec = 0x1
-        let mag = 0x1
-        let cent = 0x1
+        let dec = "032.155"
+        let mag = "245.978"
+        let cent = "121.874"
         let tokenId = 1
 
         it('star does not exist', async function () { 
@@ -27,9 +27,9 @@ contract('StarNotary', accounts => {
     })
 
     describe('can create a star', () => {
-        let dec = 0x1
-        let mag = 0x1
-        let cent = 0x1
+        let dec = "032.155"
+        let mag = "245.978"
+        let cent = "121.874"
         let tokenId = 1
 
         beforeEach(async function () { 
@@ -40,6 +40,9 @@ contract('StarNotary', accounts => {
             var starInfo = await this.contract.tokenIdToStarInfo(tokenId)
             assert.equal(starInfo[0], 'Osa Menor')
             assert.equal(starInfo[1], 'La Osa Mayor tenía una hija, llamada Osa Menor')
+            assert.equal(starInfo[2], "ra_" + cent)
+            assert.equal(starInfo[3], "dec_" + dec)
+            assert.equal(starInfo[4], "mag_" + mag)
         })
 
         it('ownerOf tokenId is user1', async function () {
