@@ -60,16 +60,19 @@ contract('StarNotary', accounts => {
         })
     })
 
-    /*describe('buying and selling stars', () => { 
+    describe('buying and selling stars', () => { 
 
         let user1 = accounts[1]
         let user2 = accounts[2]
 
         let starId = 1
+        let dec = "032.155"
+        let mag = "245.978"
+        let cent = "121.874"
         let starPrice = web3.toWei(.01, "ether")
 
         beforeEach(async function () {
-            await this.contract.createStar('awesome star', starId, {from: user1})
+            tx = await this.contract.createStar("Osa Menor", "La Osa Mayor tenía una hija, llamada Osa Menor", dec, mag, cent, starId, {from: user1})
         })
 
         describe('user1 can sell a star', () => { 
@@ -114,5 +117,5 @@ contract('StarNotary', accounts => {
                 assert.equal(balanceOfUser2BeforeTransaction.sub(balanceAfterUser2BuysStar), starPrice)
             })
         })
-    })*/
+    })
 })

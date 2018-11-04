@@ -125,42 +125,9 @@ contract StarNotary is ERC721 {
         return isStarRegistered[stringToBytes32(_dec)][stringToBytes32(_mag)][stringToBytes32(_cent)];
     }
     
-    /*function mint(address _minter, uint256 _tokenId) public {
-        require(tokenToOwner[_tokenId] == address(0), "this token belongs to someone else already");
-
-        tokenToOwner[_tokenId] = _minter; 
-        ownerToBalance[_minter] += 1;
-
-        emit Transfer(address(0), _minter, _tokenId);
+    function starsForSale(uint256 _tokenId) public view returns(uint256) {
+        return starsForSale[_tokenId];
     }
-    
-    function approve() {
-
-    }
-
-    function safeTransferFrom() {
-
-    }
-
-    function SetApprovalForAll() {
-
-    }
-    
-    function getApproved() {
-
-    }
-    
-    function isApprovedForAll() {
-
-    }
-    
-    function ownerOf(uint256 _tokenId) public view {
-        return ownerOf(_tokenId);
-    }
-    
-    /*function starsForSale() {
-
-    }*/
     
     function tokenIdToStarInfo(uint256 _tokenId) public view returns (string starName, string starStory,
     string ra, string dec, string mag) {
